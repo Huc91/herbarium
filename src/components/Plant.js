@@ -1,6 +1,8 @@
-function Plant(){
+import './Plant.css';
 
-    const maxCount = 300; // max count of the cirlces
+function Plant(props){
+
+    const maxCount = 2000; // max count of the cirlces
     let w = 300,
     h = 300;
 
@@ -37,9 +39,19 @@ function Plant(){
           }
       }
       
-      const angle = Math.atan2(newY - circleToRender[closestIndex].y, newX - circleToRender[closestIndex].x),
-      x = circleToRender[closestIndex].x + Math.cos(angle) * (circleToRender[closestIndex].r + R),
-      y = circleToRender[closestIndex].y + Math.sin(angle) * (circleToRender[closestIndex].r + R),
+      function getAngle(type){
+        if (type === 'algae')
+          return Math.atan2(newY - circleToRender[closestIndex].y, newX - circleToRender[closestIndex].x);
+        
+        if (type === 'grass')
+          return getRandom(Math.PI + 0.33, Math.PI * 2 - 0.33)
+        
+        return null;
+      }
+
+      
+      const x = circleToRender[closestIndex].x + Math.cos(getAngle(props.species)) * (circleToRender[closestIndex].r + R),
+      y = circleToRender[closestIndex].y + Math.sin(getAngle(props.species)) * (circleToRender[closestIndex].r + R),
       r = R;
 
       circleToRender.push(
@@ -54,7 +66,7 @@ function Plant(){
 
 
     return (
-        <div>
+        <div className="plant-container">
             <svg viewBox={`0 0 ${w} ${h}`} xmlns="http://www.w3.org/2000/svg">
             {circleToRender.map((crc, index) => (
               <circle key={index} cx={crc.x} cy={crc.y} r={crc.r}>

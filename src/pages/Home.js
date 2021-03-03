@@ -1,9 +1,9 @@
 import Plant from 'components/Plant'
 
-function Home(){
+function Home(props){
     return (
         <div className={'Home', 'page'}>
-            <Plant></Plant>
+            <Plant species={props.species}></Plant>
         </div>
     );
 }
