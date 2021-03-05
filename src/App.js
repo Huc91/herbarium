@@ -16,6 +16,7 @@ function App() {
       <nav className="nav-buttons">
         <button onClick={() => setSpecies('algae')} >Algae Neuronica</button>
         <button onClick={() => setSpecies('grass')}>Fulminea Grass</button>
+        <button onClick={() => setSpecies('tree')}>Dust Sapling</button>
       </nav>
       <Home species={species}></Home>
     </div>
