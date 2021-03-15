@@ -1,6 +1,10 @@
+import React, { useEffect } from 'react';
 import './Plant.css';
 
 function Plant(props){
+
+    //const [circleToRender, setCircle] = useState([]);
+    const circleToRender = [];
 
     const maxCount = 1000; // max count of the cirlces
     let w = 300,
@@ -29,8 +33,6 @@ function Plant(props){
       }
     }
 
-    let circleToRender = [];
-
     circleToRender.push(
       {
         x: w/2,
@@ -39,17 +41,19 @@ function Plant(props){
       }
     )
 
-    while (circleToRender.length + 1 <= maxCount) {
+    let c = 0;
 
+    while (circleToRender.length + 1 <= maxCount) {
+      c++;
       let closestDist = Number.MAX_VALUE;
       let closestIndex = 0;
 
-      const R = 1,
-      newX = getRandom(R, w - R),
-      newY = getRandom(R, speciesOptions[props.species].yLimit - R);
+      const radius = getRandom(1, 2),
+      temporaryX = getRandom(radius, w - radius),
+      temporaryY = getRandom(radius, speciesOptions[props.species].yLimit - radius);
 
       for (let i = 0; i < circleToRender.length; i++) {
-          const distanceFromNewCoords = getDistanceFromTwoPoints(newX, newY, circleToRender[i].x, circleToRender[i].y);
+          const distanceFromNewCoords = getDistanceFromTwoPoints(temporaryX, temporaryY, circleToRender[i].x, circleToRender[i].y);
           if (distanceFromNewCoords < closestDist) {
             closestDist = distanceFromNewCoords;
             closestIndex = i;
@@ -58,16 +62,16 @@ function Plant(props){
 
       function getAngle(type){
         if (type === 'ramificate')
-          return Math.atan2(newY - circleToRender[closestIndex].y, newX - circleToRender[closestIndex].x);
+          return Math.atan2(temporaryY - circleToRender[closestIndex].y, temporaryX - circleToRender[closestIndex].x);
         //return getRandom(Math.PI + 0.33, Math.PI * 2 - 0.33)
 
         return null;
       }
 
 
-      const x = circleToRender[closestIndex].x + Math.cos(getAngle('ramificate')) * (circleToRender[closestIndex].r + R),
-      y = circleToRender[closestIndex].y + Math.sin(getAngle('ramificate')) * (circleToRender[closestIndex].r + R),
-      r = R;
+      const x = circleToRender[closestIndex].x + Math.cos(getAngle('ramificate')) * (circleToRender[closestIndex].r + radius),
+      y = circleToRender[closestIndex].y + Math.sin(getAngle('ramificate')) * (circleToRender[closestIndex].r + radius),
+      r = radius;
 
       circleToRender.push(
         {
