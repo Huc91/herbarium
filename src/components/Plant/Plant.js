@@ -41,19 +41,23 @@ function Plant(props){
       }
     )
 
-    let c = 0;
-
     while (circleToRender.length + 1 <= maxCount) {
-      c++;
-      let closestDist = Number.MAX_VALUE;
-      let closestIndex = 0;
 
       const radius = getRandom(1, 2),
       temporaryX = getRandom(radius, w - radius),
       temporaryY = getRandom(radius, speciesOptions[props.species].yLimit - radius);
 
+      let closestDist = Number.MAX_VALUE;
+      let closestIndex = 0;
+      const approximativeCloseness = 10;
+
       for (let i = 0; i < circleToRender.length; i++) {
           const distanceFromNewCoords = getDistanceFromTwoPoints(temporaryX, temporaryY, circleToRender[i].x, circleToRender[i].y);
+          // why? becaus it's more performative. O(n log n) instead of O(n^2) in worst case scenario.
+          if(closestDist < approximativeCloseness) {
+            closestIndex = i;
+            break;
+          }
           if (distanceFromNewCoords < closestDist) {
             closestDist = distanceFromNewCoords;
             closestIndex = i;
