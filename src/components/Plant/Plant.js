@@ -53,7 +53,7 @@ function Plant(props){
 
       for (let i = 0; i < circleToRender.length; i++) {
           const distanceFromNewCoords = getDistanceFromTwoPoints(temporaryX, temporaryY, circleToRender[i].x, circleToRender[i].y);
-          // why? becaus it's more performative. O(n log n) instead of O(n^2) in worst case scenario.
+          // why? becaus it's more performative. O(n) in worst case scenario.
           if(closestDist < approximativeCloseness) {
             closestIndex = i;
             break;
